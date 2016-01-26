@@ -1,0 +1,6 @@
+SUPER4412 BOARD
+M:	Grant Shen <gngshn@gmail.com>
+S:	Maintained
+F:	board/samsung/super4412/
+F:	include/configs/super4412.h
+F:	configs/super4412_defconfig

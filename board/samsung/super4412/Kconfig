@@ -1,0 +1,12 @@
+if TARGET_SUPER4412
+
+config SYS_BOARD
+	default "super4412"
+
+config SYS_VENDOR
+	default "samsung"
+
+config SYS_CONFIG_NAME
+	default "super4412"
+
+endif
