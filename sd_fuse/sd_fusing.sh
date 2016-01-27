@@ -42,7 +42,7 @@ fi
 # check files
 
 E4412_SPL=../spl/super4412-spl.bin
-E4412_UBOOT=../u-boot.bin
+E4412_UBOOT=../u-boot-dtb.bin
 
 if [ ! -f ${E4412_SPL} ]; then
 	echo "Error: super4412_spl.bin NOT found, please build it & try again."

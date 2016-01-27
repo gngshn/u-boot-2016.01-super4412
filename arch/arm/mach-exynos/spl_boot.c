@@ -259,8 +259,26 @@ void copy_uboot_to_ram(void)
 		break;
 	}
 
+#ifdef CONFIG_SUPER4412
+	if (copy_bl2) {
+		unsigned int step = 0x10000 / 512;
+		volatile char *buffer = (volatile char *)0x02050000;
+		volatile char *dist = (volatile char *)CONFIG_SYS_TEXT_BASE;
+
+		while (size > 0) {
+			int i;
+			copy_bl2(offset, step, (u32)buffer);
+			for (i = 0; i < step * 512; i++)
+				*(dist + i) = *(buffer + i);
+			size -= step;
+			offset += step;
+			dist += step * 512;
+		}
+	}
+#else
 	if (copy_bl2)
 		copy_bl2(offset, size, CONFIG_SYS_TEXT_BASE);
+#endif
 }
 
 void memzero(void *s, size_t n)

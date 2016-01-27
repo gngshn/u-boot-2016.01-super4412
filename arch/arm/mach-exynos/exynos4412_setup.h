@@ -438,6 +438,7 @@ struct mem_timings {
 	unsigned timingdata;
 	unsigned timingpower;
 	unsigned zqcontrol;
+	unsigned ivcontrol;
 	unsigned control0;
 	unsigned control1;
 	unsigned control2;
@@ -503,10 +504,9 @@ struct mem_timings {
 #define CTRL_ZQ_FORCE_IMPN	(0x5 << 14)
 #define CTRL_ZQ_FORCE_IMPP	(0x6 << 17)
 #define CTRL_DCC		(0xE38 << 20)
-#define ZQ_CONTROL_VAL		(CTRL_ZQ_MODE_NOTERM | CTRL_ZQ_START\
-				| CTRL_ZQ_DIV | CTRL_ZQ_MODE_DDS\
-				| CTRL_ZQ_MODE_TERM | CTRL_ZQ_FORCE_IMPN\
-				| CTRL_ZQ_FORCE_IMPP | CTRL_DCC)
+#define ZQ_CONTROL_VAL		0xE3854C03
+
+#define IVCONTROL_VAL		0x8000001F
 
 #define ASYNC			(0 << 0)
 #define CLK_RATIO		(1 << 1)
@@ -520,11 +520,7 @@ struct mem_timings {
 #define QOS_FAST_DISABLE	(0 << 11)
 #define RD_FETCH		(0x3 << 12)
 #define TIMEOUT_LEVEL0		(0xFFF << 16)
-#define CONCONTROL_VAL		(ASYNC | CLK_RATIO | DIV_PIPE | AWR_ON\
-				| AREF_DISABLE | DRV_TYPE_DISABLE\
-				| CHIP0_NOT_EMPTY | CHIP1_NOT_EMPTY\
-				| DQ_SWAP_DISABLE | QOS_FAST_DISABLE\
-				| RD_FETCH | TIMEOUT_LEVEL0)
+#define CONCONTROL_VAL		0x0FFF301A
 
 #define CLK_STOP_DISABLE	(0 << 1)
 #define DPWRDN_DISABLE		(0 << 2)
@@ -536,10 +532,7 @@ struct mem_timings {
 #define MEM_WIDTH_32		(0x2 << 12)
 #define NUM_CHIP_2		(1 << 16)
 #define BL_8			(0x3 << 20)
-#define MEMCONTROL_VAL		(CLK_STOP_DISABLE | DPWRDN_DISABLE\
-				| DPWRDN_TYPE | TP_DISABLE | DSREF_DIABLE\
-				| ADD_LAT_PALL | MEM_TYPE_DDR3 | MEM_WIDTH_32\
-				| NUM_CHIP_2 | BL_8)
+#define MEMCONTROL_VAL		0x00312640
 
 
 #define CHIP_BANK_8		(0x3 << 0)
@@ -554,10 +547,8 @@ struct mem_timings {
 #define CHIP0_BASE		(0x20 << 24)
 #define CHIP1_BASE		(0x40 << 24)
 #endif
-#define MEMCONFIG0_VAL		(CHIP_BANK_8 | CHIP_ROW_14 | CHIP_COL_10\
-				| CHIP_MAP_INTERLEAVED | CHIP_MASK | CHIP0_BASE)
-#define MEMCONFIG1_VAL		(CHIP_BANK_8 | CHIP_ROW_14 | CHIP_COL_10\
-				| CHIP_MAP_INTERLEAVED | CHIP_MASK | CHIP1_BASE)
+#define MEMCONFIG0_VAL		0x40801333
+#define MEMCONFIG1_VAL		0x80801333
 
 #define TP_CNT			(0xff << 24)
 #define PRECHCONFIG		TP_CNT
@@ -570,36 +561,26 @@ struct mem_timings {
 #define CTRL_START_POINT	(0x10 << 8)
 #define CTRL_INC		(0x10 << 16)
 #define CTRL_FORCE		(0x71 << 24)
-#define CONTROL0_VAL		(CTRL_OFF | CTRL_DLL_OFF | CTRL_HALF\
-				| CTRL_DFDQS | DQS_DELAY | CTRL_START_POINT\
-				| CTRL_INC | CTRL_FORCE)
+#define CONTROL0_VAL		0x71101008
 
 #define CTRL_SHIFTC		(0x6 << 0)
 #define CTRL_REF		(8 << 4)
 #define CTRL_SHGATE		(1 << 29)
 #define TERM_READ_EN		(1 << 30)
 #define TERM_WRITE_EN		(1 << 31)
-#define CONTROL1_VAL		(CTRL_SHIFTC | CTRL_REF | CTRL_SHGATE\
-				| TERM_READ_EN | TERM_WRITE_EN)
+#define CONTROL1_VAL		0xe0000086
 
 #define CONTROL2_VAL		0x00000000
 
-#ifdef CONFIG_SUPER4412
 #define TIMINGREF_VAL		0x000000BB
-#define TIMINGROW_VAL		0x4046654f
-#define	TIMINGDATA_VAL		0x46400506
-#define	TIMINGPOWER_VAL		0x52000A3C
-#else
-#define TIMINGREF_VAL		0x000000BC
 #ifdef DRAM_CLK_330
 #define TIMINGROW_VAL		0x3545548d
 #define	TIMINGDATA_VAL		0x45430506
-#define	TIMINGPOWER_VAL		0x4439033c
+#define	TIMINGPOWER_VAL		0x46000A3c
 #endif
 #ifdef DRAM_CLK_400
-#define TIMINGROW_VAL		0x45430506
-#define	TIMINGDATA_VAL		0x56500506
-#define	TIMINGPOWER_VAL		0x5444033d
-#endif
+#define TIMINGROW_VAL		0x6946654f
+#define	TIMINGDATA_VAL		0x46400506
+#define	TIMINGPOWER_VAL		0x52000a3c
 #endif
 #endif

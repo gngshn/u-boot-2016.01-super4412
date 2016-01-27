@@ -34,8 +34,6 @@
 
 /* select serial console configuration */
 #define CONFIG_BAUDRATE			115200
-#define CONFIG_SPL_SERIAL_SUPPORT
-#define CONFIG_SPL_GPIO_SUPPORT
 
 /* Console configuration */
 #define CONFIG_SYS_CONSOLE_INFO_QUIET
